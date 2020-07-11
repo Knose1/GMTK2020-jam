@@ -24,12 +24,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		public event Action OnReady;
 
-		[SerializeField] protected int shmupScene = 0;
-		[SerializeField] protected int raceScene = 0;
-		[SerializeField] protected int plateformerScene = 0;
-		[SerializeField] protected int tankScene = 0;
-		[SerializeField] protected int oneButtonScene = 0;
-
+		[SerializeField] protected List<int> scenes;
 		protected List<int> randomScenes;
 
 		public bool IsReady => OperationCount <= 0;
@@ -72,6 +67,8 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 				
 				nextRoot = null;
 				nextLevel = -1;
+
+				SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(currentLevel));
 
 				currentRoot?.StartGame();
 				PreloadNextLevel();
@@ -117,14 +114,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		protected void GenerateRandomList(int currentScene = -1)
 		{
-			randomScenes = new List<int>()
-			{
-				shmupScene,
-				raceScene,
-				plateformerScene,
-				tankScene,
-				oneButtonScene
-			};
+			randomScenes = new List<int>(scenes);
 
 			randomScenes.Shuffle();
 
