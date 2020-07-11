@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Com.Github.Knose1.OutOfControls.OneButtonGame
 {
-	public sealed class GameManager : RootManager
+	public sealed class OBGGameManager : RootManager
 	{
 		private float countDown;
 

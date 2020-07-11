@@ -1,4 +1,5 @@
-﻿using Com.Github.Knose1.OutOfControls.Base;
+﻿using Com.Github.Knose1.Common;
+using Com.Github.Knose1.OutOfControls.Base;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -125,7 +126,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 				oneButtonScene
 			};
 
-			randomScenes.Sort((_, __) => { return UnityEngine.Random.Range(-1, 1); });
+			randomScenes.Shuffle();
 
 			if (currentScene >= 0 && randomScenes.IndexOf(currentScene) < 1)
 			{

@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace Com.Github.Knose1.OutOfControls.OneButtonGame
 {
-	public class Bullet : CollidesWith
+	public class OBGBullet : CollidesWith
 	{
 		public float speed = 1;
 
-		public Bullet()
+		public OBGBullet()
 		{
-			collides.Add(typeof(Player));
-			collides.Add(typeof(PlayerAttack));
+			collides.Add(typeof(OBGPlayer));
+			collides.Add(typeof(OBGPlayerAttack));
 		}
 
 		private void Update()
