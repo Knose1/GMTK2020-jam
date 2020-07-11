@@ -338,3 +338,13 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+Library/
+Assets/AllSkyFree/
+Assets/Bitgem/
+Assets/Cartoon_Tank_Free/
+Assets/UI Manager Graph/
+Assets/RealisticMobileCars - Pro 3D Models/
+Assets/Demigiant/
+*.csproj
+*.sln
