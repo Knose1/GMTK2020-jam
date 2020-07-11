@@ -18,8 +18,8 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 		protected int nextLevel = -1;
 		protected int currentLevel = -1;
 
-		protected Root nextRoot = null;
-		protected Root currentRoot = null;
+		protected RootManager nextRoot = null;
+		protected RootManager currentRoot = null;
 
 		public event Action OnReady;
 
@@ -46,17 +46,17 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		public void Awake()
 		{
-			Root.OnRootLoaded += Root_OnRootLoaded;
+			RootManager.OnRootLoaded += Root_OnRootLoaded;
 		}
 
-		private void Root_OnRootLoaded(Root obj)
+		private void Root_OnRootLoaded(RootManager obj)
 		{
 			nextRoot = obj;
 		}
 
 		private void OnDestroy()
 		{
-			Root.OnRootLoaded -= Root_OnRootLoaded;
+			RootManager.OnRootLoaded -= Root_OnRootLoaded;
 		}
 
 
@@ -71,8 +71,8 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 				
 				nextRoot = null;
 				nextLevel = -1;
-				
-				currentRoot?.gameObject.SetActive(true);
+
+				currentRoot?.StartGame();
 				PreloadNextLevel();
 			}
 			else
@@ -90,7 +90,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 		public void CloseCurrentLevel()
 		{
 			if (currentLevel == -1) return;
-			currentRoot.gameObject.SetActive(false);
+			currentRoot?.StopGame();
 			currentRoot = null;
 
 			OperationCount += 1;

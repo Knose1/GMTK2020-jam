@@ -8,13 +8,12 @@ using UnityEngine;
 
 namespace Com.Github.Knose1.OutOfControls.Base
 {
-	public abstract class PlayerBase : StateMachine
+	public abstract class PlayerBase : CollidesWith
 	{
 		public static event Action<PlayerBase> OnPlayerReady;
 
-		protected override void Awake()
+		protected virtual void Awake()
 		{
-			base.Awake();
 			OnPlayerReady?.Invoke(this);
 		}
 	}

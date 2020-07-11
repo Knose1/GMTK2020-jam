@@ -6,9 +6,7 @@ using UnityEngine;
 
 namespace Com.Github.Knose1.OutOfControls.GamesController
 {
-	
-
-	public class GameManager : MonoBehaviour
+	public class WholeGameManager : MonoBehaviour
 	{
 		protected float gameCountdown = 0;
 
@@ -73,9 +71,6 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 			levelManager.ClosePreloadLevel();
 			levelManager.CloseCurrentLevel();
-
-			currentPlayer?.StopMachine();
-			nextPlayer?.StopMachine();
 		}
 
 

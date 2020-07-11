@@ -339,6 +339,8 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
+*.sln
+*.csproj
 Library/
 Assets/AllSkyFree/
 Assets/Bitgem/
@@ -346,5 +348,10 @@ Assets/Cartoon_Tank_Free/
 Assets/UI Manager Graph/
 Assets/RealisticMobileCars - Pro 3D Models/
 Assets/Demigiant/
-*.csproj
-*.sln
+/Temp
+/Packages
+/Assets/Medieval_pixel_art_asset_FREE
+/Assets/Hero_Knight_2
+/Assets/2D Pixel Spaceships (2 Small Ships + Explosions)
+/Assets/2D Pixel Spaceship - Two Small Ships
+/Assets/2D pixel asteroids
