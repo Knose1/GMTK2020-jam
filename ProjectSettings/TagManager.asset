@@ -15,8 +15,8 @@ TagManager:
   - 
   - 
   - EditorOnly
-  - 
-  - 
+  - ScreenUI
+  - PostProcess
   - 
   - 
   - 
