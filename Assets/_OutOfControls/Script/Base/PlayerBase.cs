@@ -12,16 +12,16 @@ namespace Com.Github.Knose1.OutOfControls.Base
 	{
 		public static event Action<PlayerBase> OnPlayerReady;
 
-		public event Action OnScore;
+		public event Action<float> OnScore;
 
 		protected virtual void Awake()
 		{
 			OnPlayerReady?.Invoke(this);
 		}
 
-		protected void Score()
+		protected void Score(float score)
 		{
-			OnScore?.Invoke();
+			OnScore?.Invoke(score);
 		}
 	}
 }

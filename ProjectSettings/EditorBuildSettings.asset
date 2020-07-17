@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_OutOfControls/Scenes/Main.unity
     guid: 208353b0b9b96c94aa156a68694a1907
-  - enabled: 1
+  - enabled: 0
     path: Assets/_OutOfControls/Scenes/Game/ShmupScene.unity
     guid: 806a58e5fd0124b4a9ad777ad26101c8
   - enabled: 1
     path: Assets/_OutOfControls/Scenes/Game/RaceScene.unity
     guid: d5b08e8370afb5c4580987f982a8779b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_OutOfControls/Scenes/Game/PlateformerScene.unity
     guid: 3ed607fc96bbac84f968c97743be87eb
   - enabled: 1

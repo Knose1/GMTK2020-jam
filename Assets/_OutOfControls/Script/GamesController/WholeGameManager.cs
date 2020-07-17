@@ -23,7 +23,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 		public event Action OnEnd;
 
 		public float GameDuration => endTimestamp - startTimestamp;
-		[NonSerialized] public int score;
+		protected float score;
 
 		protected float gameCountdown = 0;
 		protected float startTimestamp = -1;
@@ -35,12 +35,13 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 		protected Action doSaveScore;
 		protected Action doActionOnLevelManagerReady;
 
-		[SerializeField] protected Camera mainCamera;
+		[SerializeField] protected Camera camera;
 		[SerializeField] protected LevelManager levelManager;
-		[SerializeField] protected int scoreAdd;
-		[SerializeField] protected int memoryLack;
+		[SerializeField] protected int gameTime = 20;
+		[SerializeField] protected AnimationCurve memoryLack;
 		[SerializeField] protected float limitedTime;
 		[SerializeField] protected int scoreTarget;
+		private bool switchGame;
 
 		public void Awake()
 		{
@@ -65,6 +66,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 					doSaveScore = SaveLimitedTime;
 					break;
 				case GameMode.memoryLack:
+					score = 100;
 					doGameMode = GameModeMemoryLack;
 					doSaveScore = SaveMemoryLack;
 					break;
@@ -78,21 +80,23 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 		
 		private void OnGameReadyOnStart()
 		{
-			mainCamera.gameObject.SetActive(false);
+			camera.gameObject.SetActive(false);
 			startTimestamp = Time.time;
 			doAction = DoActionNormal;
 			OnGameReady();
+			switchGame = false;
 		}
 
 		private void OnGameReady()
 		{
-			gameCountdown = 10;
+			gameCountdown = gameTime;
+			switchGame = true;
 
-			currentPlayer.OnScore -= CurrentPlayer_OnScore;
+			if (currentPlayer) currentPlayer.OnScore -= CurrentPlayer_OnScore;
 
 			currentPlayer = nextPlayer;
 
-			currentPlayer.OnScore += CurrentPlayer_OnScore;
+			if (currentPlayer) currentPlayer.OnScore += CurrentPlayer_OnScore;
 
 			doActionOnLevelManagerReady = null;
 			levelManager.NextLevel();
@@ -100,6 +104,8 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		private void DoActionNormal()
 		{
+			endTimestamp = Time.time;
+
 			if (doGameMode()) 
 			{
 				StopGame();
@@ -111,6 +117,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 				OnGameReady();
 			}
 			gameCountdown -= Time.deltaTime;
+			switchGame = false;
 		}
 
 		public void StopGame()
@@ -123,6 +130,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 			levelManager.ClosePreloadLevel();
 			levelManager.CloseCurrentLevel();
 
+			score = Mathf.FloorToInt(score);
 			doSaveScore();
 		}
 
@@ -140,9 +148,11 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		private bool GameModeMemoryLack()
 		{
-			score -= Mathf.FloorToInt(Time.deltaTime * memoryLack);
+			score -= Time.deltaTime * memoryLack.Evaluate(GameDuration);
 
-			return score > 0;
+			score = Mathf.Max(-10, score);
+
+			return score <= 0;
 		}
 		
 		private void SaveMemoryLack()
@@ -166,14 +176,14 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 
 
-		private void CurrentPlayer_OnScore()
+		private void CurrentPlayer_OnScore(float score)
 		{
-			score += scoreAdd;
+			this.score += score;
 		}
 
 		private void DispatchOnCanCloseGame()
 		{
-			mainCamera.gameObject.SetActive(true);
+			camera.gameObject.SetActive(true);
 			OnEnd?.Invoke();
 		}
 
@@ -184,7 +194,12 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 
 		private void Player_OnPlayerReady(PlayerBase obj)
 		{
-			nextPlayer = obj;
+			if (!currentPlayer)
+			{
+				currentPlayer = obj;
+				currentPlayer.OnScore += CurrentPlayer_OnScore;
+			}
+			else nextPlayer = obj;
 		}
 
 

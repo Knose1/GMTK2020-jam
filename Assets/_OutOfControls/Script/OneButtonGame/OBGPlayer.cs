@@ -39,7 +39,7 @@ namespace Com.Github.Knose1.OutOfControls.OneButtonGame
 
 		private void Player_OnScore()
 		{
-			Score();
+			Score(15);
 		}
 
 		public OBGPlayer()

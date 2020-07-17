@@ -54,7 +54,8 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 			Debug.Log("Raw Json : " + text);
 			Debug.Log("--------------");
 
-			data = JsonUtility.FromJson<Data>(text);
+			if (text == "") data = default;
+			else data = JsonUtility.FromJson<Data>(text);
 		}
 
 		public void WriteData()
@@ -97,15 +98,25 @@ namespace Com.Github.Knose1.OutOfControls.GamesController.UI
 		protected MachineState secondGameState;
 		protected MachineState thirdGameState;
 
+		private void Start()
+		{
+			StartMachine();
+		}
 
 		protected override void SetupMachine()
 		{
 			base.SetupMachine();
 
+			mainState = new MachineState();
+
 			firstStartState = new GameObjectMachineState(firstStartGo);
 			secondStartState = new GameObjectMachineState(secondStartGo);
 			thirdStartState = new GameObjectMachineState(thirdStartGo);
 			mainMenuState = new GameObjectMachineState(mainMenuGo);
+
+			firstGameState = new MachineState();
+			secondGameState = new MachineState();
+			thirdGameState = new MachineState();
 
 			AllowTrigger(FIRST_START_TRIGGER);
 			AllowTrigger(SECOND_START_TRIGGER);
@@ -131,6 +142,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController.UI
 			firstGameState.OnStart += FirstGameState_OnStart;
 			secondGameState.OnStart += SecondGameState_OnStart;
 			thirdGameState.OnStart += ThirdGameState_OnStart;
+
 		}
 
 		private void FirstGameState_OnStart(Thread obj) => StartGame(WholeGameManager.GameMode.limitedTime);

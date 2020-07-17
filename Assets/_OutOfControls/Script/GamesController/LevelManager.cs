@@ -101,8 +101,12 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 			if (nextLevel == -1) return;
 			nextRoot = null;
 
-			OperationCount += 1;
-			SceneManager.UnloadSceneAsync(nextLevel).completed += SceneActionComplete;
+			AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(nextLevel);
+			if (asyncOperation != null)
+			{
+				OperationCount += 1;
+				asyncOperation.completed += SceneActionComplete;
+			}
 			nextLevel = -1;
 		}
 
@@ -121,7 +125,7 @@ namespace Com.Github.Knose1.OutOfControls.GamesController
 			if (currentScene >= 0 && randomScenes.IndexOf(currentScene) < 1)
 			{
 				randomScenes.Remove(currentScene);
-				randomScenes.Insert(UnityEngine.Random.Range(2, randomScenes.Count + 1), currentScene);
+				randomScenes.Insert(UnityEngine.Random.Range(1, randomScenes.Count + 1), currentScene);
 			}
 		}
 

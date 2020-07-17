@@ -66,7 +66,7 @@ namespace Com.Github.Knose1.OutOfControls.Tank
 
 		private void CurrentBullet_OnScore()
 		{
-			Score();
+			Score(25);
 		}
 
 		private void CurrentBullet_OnDie(TankBullet bullet)

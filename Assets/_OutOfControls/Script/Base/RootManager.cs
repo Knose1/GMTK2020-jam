@@ -17,7 +17,7 @@ namespace Com.Github.Knose1.OutOfControls.Base
 #endif
 		[SerializeField] private Camera _camera;
 		[SerializeField] private Light _light;
-		[SerializeField] private int waitOnStart = 1;
+		[SerializeField] private float waitOnStart = 1;
 
 
 		public Camera Camera => _camera;
@@ -31,6 +31,7 @@ namespace Com.Github.Knose1.OutOfControls.Base
 			OnRootLoaded?.Invoke(this);
 		}
 
+#if UNITY_EDITOR
 		private void OnValidate()
 		{
 			if (start)
@@ -40,6 +41,7 @@ namespace Com.Github.Knose1.OutOfControls.Base
 					StartGame();
 			}
 		}
+#endif
 
 		public void StartGame()
 		{
